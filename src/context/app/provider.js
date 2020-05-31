@@ -13,6 +13,7 @@ const AppProvider = ({ children }) => {
         setInitialData,
         setMode,
         setUser,
+        setWinners,
     } = useContextActions(dispatch);
 
     const fetchInitialData = async () => {
@@ -32,6 +33,25 @@ const AppProvider = ({ children }) => {
         } catch (e) {
             console.warn(`Fetch with ${e}`);
         }
+    };
+
+    const fetchWinners = async () => {
+        try {
+            const url = baseUrl + endpoints.winners;
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            const data = await res.json();
+
+            if(data) {
+                setWinners(data.reverse());
+            }
+        } catch (e) {
+            console.warn(`Fetch with ${e}`);
+        }
     }
 
     useEffect(() => {
@@ -42,6 +62,7 @@ const AppProvider = ({ children }) => {
         ...state,
         setMode,
         setUser,
+        fetchWinners,
     };
 
     return (

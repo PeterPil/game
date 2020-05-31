@@ -1,11 +1,13 @@
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA';
 const SET_MODE = 'SET_MODE';
 const SET_USER = 'SET_USER';
+const SET_WINNERS = 'SET_WINNERS';
 
 export const actionTypes = {
     SET_INITIAL_DATA,
     SET_USER,
     SET_MODE,
+    SET_WINNERS,
 };
 
 const setInitialData = data => ({
@@ -23,8 +25,14 @@ const setUser = user => ({
     payload: user,
 });
 
+const setWinners = winners => ({
+    type: SET_WINNERS,
+    payload: winners,
+});
+
 export const useContextActions = dispatch => ({
     setInitialData: data => dispatch(setInitialData(data)),
     setMode: mode => dispatch(setMode(mode)),
     setUser: user => dispatch(setUser(user)),
+    setWinners: winners => dispatch(setWinners(winners)),
 });

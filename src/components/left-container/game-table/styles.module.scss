@@ -1,0 +1,12 @@
+.item {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.table {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+}

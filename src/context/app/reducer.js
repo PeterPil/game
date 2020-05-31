@@ -5,6 +5,7 @@ export const defaultState = {
   modes: [],
   user: '',
   mode: {},
+  winners: [],
 }
 
 export default (state, action) =>
@@ -27,6 +28,10 @@ export default (state, action) =>
             }
             case actionTypes.SET_USER: {
                 draft.user = action.payload;
+                break;
+            }
+            case actionTypes.SET_WINNERS: {
+                draft.winners = action.payload;
                 break;
             }
             default:
