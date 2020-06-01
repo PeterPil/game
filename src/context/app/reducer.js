@@ -1,11 +1,17 @@
 import produce from 'immer';
 import { actionTypes } from './actions';
+import { statuses } from '../../constants/statuses';
 
 export const defaultState = {
   modes: [],
   user: '',
-  mode: {},
+  mode: {
+      field: 5,
+      delay: 5000,
+      name: 'easyMode',
+  },
   winners: [],
+  status: statuses.INITIAL,
 }
 
 export default (state, action) =>
@@ -32,6 +38,10 @@ export default (state, action) =>
             }
             case actionTypes.SET_WINNERS: {
                 draft.winners = action.payload;
+                break;
+            }
+            case actionTypes.SET_STATUS: {
+                draft.status = action.payload;
                 break;
             }
             default:

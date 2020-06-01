@@ -14,6 +14,7 @@ const AppProvider = ({ children }) => {
         setMode,
         setUser,
         setWinners,
+        setStatus,
     } = useContextActions(dispatch);
 
     const fetchInitialData = async () => {
@@ -63,6 +64,7 @@ const AppProvider = ({ children }) => {
         setMode,
         setUser,
         fetchWinners,
+        setStatus,
     };
 
     return (

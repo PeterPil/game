@@ -10,6 +10,7 @@ const ModesDropDown = () => {
 
     const changeValue = ({ target: { value }}) => {
         const mode = modes.find(({ name }) => name === value) || {};
+        console.log(mode);
         setCurrentValue(value);
         setMode(mode);
     }
