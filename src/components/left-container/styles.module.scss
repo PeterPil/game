@@ -1,0 +1,13 @@
+.left-container {
+    width: 50%;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-header {
+        display: flex;
+        height: 50px;
+        justify-content: space-between;
+    }
+}
+

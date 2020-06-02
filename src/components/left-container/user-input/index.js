@@ -18,6 +18,7 @@ const UserInput = () => {
             <input
                 type="text"
                 placeholder="Enter your name"
+                className={styles.input}
                 value={user}
                 autoComplete="off"
                 onChange={changeValue}

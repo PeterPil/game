@@ -1,0 +1,39 @@
+$text-color: #727a7c;
+$background-color: #CFD8DC;
+
+
+.modes-dropdown {
+    height: 100%;
+    width: 150px;
+    user-select: none;
+    position: relative;
+    font-size: 16px;
+    &-header {
+        width: 100%;
+        height: 100%;
+        background-color: $background-color;
+        color: $text-color;
+        border-radius: 5px;
+        line-height: 50px;
+        padding: 0 18px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+    &-body {
+        width: 100%;
+        position: absolute;
+        top: 52px;
+        left: 0;
+        background-color: $background-color;
+        color: $text-color;
+    }
+    &-item {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 18px;
+        cursor: pointer;
+        &:hover {
+            background-color: #b4c0c4;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+.user-input {
+    background-color: #F3F3F3;
+    height: 100%;
+    width: 200px;
+    border-radius: 5px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #5a6569;
+    width: 100%;
+    &::placeholder {
+        color: #A8B3B7;
+    }
+}

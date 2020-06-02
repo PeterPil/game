@@ -1,12 +1,24 @@
+@mixin border($border) {
+    $border: 1px solid #CFD8DC;
+}
+
 .item {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    @include border('border-right');
+    @include border('border-bottom');
     box-sizing: border-box;
 }
 
 .table {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid black;
+    @include border('border-top');
+    @include border('border-left');
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

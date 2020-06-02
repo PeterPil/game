@@ -36,9 +36,16 @@ const LeftContainer = () => {
             <div className={styles['left-container-header']}>
                 <ModesDropDown />
                 <UserInput />
-                <PlayButton isStarted={isStarted} onClick={clickButton} />
+                <PlayButton
+                    isStarted={isStarted}
+                    onClick={clickButton}
+                    isFieldChosen={!field}
+                />
             </div>
-            <GameTable isStarted={isStarted} playAgainCount={playAgainCount} />
+            <GameTable
+                isStarted={isStarted}
+                playAgainCount={playAgainCount}
+            />
         </div>
     );
 };

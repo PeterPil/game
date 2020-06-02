@@ -1,32 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { AppContext } from '../../../context/app/provider';
+
+import styles from './styles.module.scss';
+import DropDownBody from './DropDownBody';
 
 const ModesDropDown = () => {
     const {
-        modes,
-        setMode,
+        mode: {
+            name,
+        }
     } = useContext(AppContext);
-    const [currentValue, setCurrentValue] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-    const changeValue = ({ target: { value }}) => {
-        const mode = modes.find(({ name }) => name === value) || {};
-        console.log(mode);
-        setCurrentValue(value);
-        setMode(mode);
-    }
+    const toggleDropdown = () => {
+        setIsOpen(open => !open);
+    };
 
     return (
-        <div>
-            <select
-                value={currentValue}
-                onChange={changeValue}
-            >
-                {modes.map(({ name }) => (
-                    <option value={name} key={name}>
-                        {name}
-                    </option>
-                ))}
-            </select>
+        <div className={styles['modes-dropdown']} ref={dropdownRef}>
+            <div className={styles['modes-dropdown-header']} onClick={toggleDropdown}>
+                { name || 'Pick game mode'}
+            </div>
+            {
+                isOpen && (
+                    <DropDownBody
+                        toggleDropdown={toggleDropdown}
+                        dropdownRef={dropdownRef && dropdownRef.current}
+                    />
+                )
+            }
         </div>
     );
 }

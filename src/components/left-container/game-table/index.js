@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { AppContext } from '../../../context/app/provider';
 
 
@@ -24,6 +24,7 @@ const GameTable = ({
     } = useContext(AppContext);
 
     const [tableArray, setTableArray] = useState([]);
+    const [winner, setWinner] = useState('');
 
     const onItemClick = item => {
         if(isStarted && item.color && item.color !== colors.RED) {
@@ -73,6 +74,7 @@ const GameTable = ({
         //     body: JSON.stringify(data),
         // });
         await setStatus(statuses.DONE);
+        await setWinner(data.winner);
     }
 
     useEffect(() => {
@@ -96,7 +98,8 @@ const GameTable = ({
             currIndex = 1;
         }
         if(isStarted) {
-            setStatus(statuses.START)
+            setStatus(statuses.START);
+            setWinner('');
             const copiedArr = [...tableArray];
             copiedArr.forEach((item, i) => {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -145,9 +148,20 @@ const GameTable = ({
         }
     }, [isStarted, playAgainCount])
 
+    const winnerResult = useMemo(() => winner
+        ? `The winner is ${winner}`
+        : 'Who win the game',
+        [winner]
+    )
+
     return (
-        <div className={styles.table} style={{ width: field * 30 }}>
-            { tableArray.map(item => <TableItem onClick={onItemClick} item={item} />)}
+        <div className={styles['table-container']}>
+            <p className={styles.winner}>
+                { winnerResult }
+            </p>
+            <div className={styles.table} style={{ width: field * 30 }}>
+                { tableArray.map(item => <TableItem onClick={onItemClick} item={item} />)}
+            </div>
         </div>
     );
 };
