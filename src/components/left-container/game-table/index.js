@@ -1,13 +1,20 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import React, {
+    useContext,
+    useState,
+    useEffect,
+    useMemo,
+} from 'react';
 import { AppContext } from '../../../context/app/provider';
-
-
-import styles from './styles.module.scss';
 import TableItem from './TableItem';
 import { baseUrl } from '../../../constants/baseUrl';
 import { endpoints } from '../../../constants/endpoints';
 import { statuses } from '../../../constants/statuses';
 import { colors } from '../../../constants/colors';
+import { dateBuilder } from '../../helpers/dateBuilder';
+
+import styles from './styles.module.scss';
+
+const DEFAULT_FIELD = 5;
 
 const GameTable = ({
     isStarted,
@@ -40,7 +47,7 @@ const GameTable = ({
         if(status === statuses.IN_PROGRESS) {
             updateUsers();
         }
-    })
+    });
 
     const updateUsers = async () => {
         let computerCount = 0;
@@ -52,13 +59,7 @@ const GameTable = ({
                 computerCount++;
             }
         });
-        const now = new Date();
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        };
-        const date = now.toLocaleDateString("en-US", options)
+        const date = dateBuilder();
         const data = {
             winner: computerCount > Math.floor((tableArray.length - 1) / 2)
                 ? 'Computer'
@@ -66,20 +67,24 @@ const GameTable = ({
             date: `${userCount}:${computerCount}; ${date}`
         }
         const fetchUrl = baseUrl + endpoints.winners;
-        // await fetch(fetchUrl, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data),
-        // });
+        await fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
         await setStatus(statuses.DONE);
         await setWinner(data.winner);
-    }
+    };
+
+    const fieldWithDefault = field
+        ? field
+        : DEFAULT_FIELD;
 
     useEffect(() => {
-        if(playAgainCount || field) {
-            const tableData = Array(field ** 2)
+        if(playAgainCount || fieldWithDefault) {
+            const tableData = Array(fieldWithDefault ** 2)
                 .fill(0)
                 .map((it, index) => ({
                     number: it + index,
@@ -93,7 +98,6 @@ const GameTable = ({
         let interval;
         let currIndex = 1;
         if(playAgainCount > 0) {
-            console.log(playAgainCount)
             clearInterval(interval);
             currIndex = 1;
         }
@@ -103,35 +107,34 @@ const GameTable = ({
             const copiedArr = [...tableArray];
             copiedArr.forEach((item, i) => {
                 const j = Math.floor(Math.random() * (i + 1));
-                [copiedArr[i], copiedArr[j]] = [copiedArr[j], copiedArr[i]];
+                [item, copiedArr[j]] = [copiedArr[j], item];
             });
+
             const firstItem = copiedArr[0];
             setTableArray(state => {
                 const prev = [...state];
                 prev[firstItem.number].color = colors.BLUE;
                 return prev;
             });
+
             interval = setInterval(() => {
                 const currItem = copiedArr[currIndex];
                 const prevItem = copiedArr[currIndex - 1];
                 setTableArray(state => {
                     const prev = [...state];
                     prev[currItem.number].color = colors.BLUE;
-                    let color = prev[prevItem.number].color;
-                        if(color !== colors.GREEN) {
-                            prev[prevItem.number].color = colors.RED;
-                        }
+                    if(prev[prevItem.number].color !== colors.GREEN) {
+                        prev[prevItem.number].color = colors.RED;
+                    }
                     return prev;
                 });
                 
                 currIndex++;
+
                 if(currIndex === copiedArr.length) {
                     setTableArray(state => {
                         const prev = [...state];
-                    let color = prev[currItem.number].color;
-                        
-                        if(color !== colors.GREEN) {
-
+                        if(prev[currItem.number].color !== colors.GREEN) {
                             prev[currItem.number].color = colors.RED;
                         }
                         return prev;
@@ -141,26 +144,33 @@ const GameTable = ({
                     setStatus(statuses.IN_PROGRESS);
                 }
             }, delay);
-        }
+        };
+
         return () => {
             clearInterval(interval);
             currIndex = 1;
         }
-    }, [isStarted, playAgainCount])
+    }, [isStarted, playAgainCount]);
 
     const winnerResult = useMemo(() => winner
         ? `The winner is ${winner}`
-        : 'Who win the game',
-        [winner]
-    )
+        : 'Who win the game?',
+        [winner],
+    );
 
     return (
         <div className={styles['table-container']}>
             <p className={styles.winner}>
                 { winnerResult }
             </p>
-            <div className={styles.table} style={{ width: field * 30 }}>
-                { tableArray.map(item => <TableItem onClick={onItemClick} item={item} />)}
+            <div className={styles.table} style={{ width: fieldWithDefault * 30 }}>
+                { tableArray.map((item, index) => (
+                    <TableItem
+                        onClick={onItemClick}
+                        item={item}
+                        key={String(item.number + index)}
+                    />
+                ))}
             </div>
         </div>
     );

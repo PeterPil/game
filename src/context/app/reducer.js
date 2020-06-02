@@ -3,15 +3,11 @@ import { actionTypes } from './actions';
 import { statuses } from '../../constants/statuses';
 
 export const defaultState = {
-  modes: [],
-  user: '',
-  mode: {
-      field: 5,
-      delay: 5000,
-      name: 'easyMode',
-  },
-  winners: [],
-  status: statuses.INITIAL,
+    modes: [],
+    user: '',
+    mode: {},
+    winners: [],
+    status: statuses.INITIAL,
 }
 
 export default (state, action) =>

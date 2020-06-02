@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../context/app/provider';
 import ModesDropDown from './modes-dropdown';
 import UserInput from './user-input';
-
-import styles from './styles.module.scss';
 import PlayButton from './play-button';
 import GameTable from './game-table';
-import { AppContext } from '../../context/app/provider';
+
+import styles from './styles.module.scss';
 
 const LeftContainer = () => {
     const {
@@ -22,7 +22,7 @@ const LeftContainer = () => {
         if(isStarted) {
             setPlayAgainCount(count => count += 1);
         }
-    }
+    };
 
     useEffect(() => {
         if(field) {

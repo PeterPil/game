@@ -16,14 +16,11 @@ const DropDownBody = ({
         if(e.target.contains(dropdownRef)) {
             toggleDropdown();
         }
-    }
+    };
 
     useEffect(() => {
-        console.log('mount');
-        
         document.addEventListener('click', handleOutSideClick);
         return () => {
-            console.log('unmount');
             document.removeEventListener('click', handleOutSideClick);
         }
     }, []);

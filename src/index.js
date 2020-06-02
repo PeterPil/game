@@ -4,12 +4,12 @@ import './index.scss';
 import App from './components/App';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
 
 if(module.hot){
-  module.hot.accept();
+    module.hot.accept();
 }

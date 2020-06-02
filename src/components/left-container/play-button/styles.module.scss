@@ -6,10 +6,12 @@
     height: 100%;
     background-color: #7B8D93;
     color: #fff;
+
     &:active,
     &:focus {
         outline: none;
     }
+
     &:disabled {
         opacity: 0.5;
     }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
+import { AppContext } from '../../../context/app/provider';
 
 import styles from './styles.module.scss';
-import { AppContext } from '../../../context/app/provider';
 
 const UserInput = () => {
     const {
@@ -11,7 +11,7 @@ const UserInput = () => {
 
     const changeValue = ({ target: { value }}) => {
         setUser(value);
-    }
+    };
 
     return (
         <div className={styles['user-input']}>
@@ -24,7 +24,7 @@ const UserInput = () => {
                 onChange={changeValue}
             />
         </div>
-    )
-}
+    );
+};
 
 export default UserInput;

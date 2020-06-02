@@ -53,7 +53,7 @@ const AppProvider = ({ children }) => {
         } catch (e) {
             console.warn(`Fetch with ${e}`);
         }
-    }
+    };
 
     useEffect(() => {
         fetchInitialData();
