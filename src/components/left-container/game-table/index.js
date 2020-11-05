@@ -31,6 +31,7 @@ const GameTable = ({
     } = useContext(AppContext);
 
     const [tableArray, setTableArray] = useState([]);
+
     const [winner, setWinner] = useState('');
 
     const onItemClick = item => {
